@@ -3,7 +3,8 @@ import { View, Text, Button, TextInput, StyleSheet } from "react-native";
 import SearchForm from "../components/githubSearch/SearchForm";
 import ListRepositories from "../components/githubSearch/ListRegister";
 
-export default function GithubSearch(params) {
+export default function GithubSearch(props) {
+  const { navigation } = props;
   const [registers, setRegisters] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -12,10 +13,13 @@ export default function GithubSearch(params) {
     <View style={styles.view}>
       <Text style={styles.text}>Github Search</Text>
 
-      {/* <Button title="Search" /> */}
       <SearchForm setRegisters={setRegisters} setIsLoading={setIsLoading} />
       <ListRepositories registers={registers} isLoading={isLoading} />
       {/* <Text>{registers}</Text> */}
+      <Button
+        title="Search"
+        onPress={() => navigation.navigate("RegistersSelected")}
+      />
     </View>
   );
 }

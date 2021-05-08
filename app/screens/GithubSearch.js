@@ -13,20 +13,23 @@ export default function GithubSearch(props) {
 
   //Contar estrellas de registros seleccionados
   useEffect(() => {
+    console.log(registersSelected);
+    let newStars = 0;
     registersSelected.map((e) => {
-      console.log(typeof e.stars);
-      setStarsCount((prev) => prev + e.stars);
+      newStars = newStars + e.stars;
     });
+    setStarsCount(newStars);
   }, [registersSelected]);
 
   //Eliminar registros de la lista actual
-  const deleteRegisters = async () => {
-    const newRegisters = await registers.filter(
+  const deleteRegisters = () => {
+    const newArray = registers.filter(
       (e) => registersSelected.indexOf(e) == -1
     );
 
-    setRegisters(newRegisters);
+    setRegisters(newArray);
     setReloadCheckbox(true);
+    setRegistersSelected([]);
   };
 
   return (
@@ -38,7 +41,6 @@ export default function GithubSearch(props) {
         setIsLoading={setIsLoading}
         setRegistersSelected={setRegistersSelected}
         setReloadCheckbox={setReloadCheckbox}
-        setStarsCount={setStarsCount}
       />
       <ListRepositories
         registers={registers}
@@ -55,7 +57,7 @@ export default function GithubSearch(props) {
             <Button
               color="#c81d11"
               title="Eliminar"
-              onPress={() => deleteRegisters()}
+              onPress={deleteRegisters}
             />
           </View>
           <View style={styles.button}>

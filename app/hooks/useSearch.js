@@ -10,11 +10,9 @@ export default function useSearch(queryInput, pageNumber, limitPage) {
   useEffect(() => {
     let isUpperCase = [];
     isUpperCase = queryInput.match(expresionUppercase);
-    console.log(isUpperCase);
 
     if (isUpperCase) {
       if (isUpperCase.length > 0) {
-        console.log("mayuscula");
         Alert.alert("", "no admite mayusculas");
         //retornando para que no haga busquedas
         return;

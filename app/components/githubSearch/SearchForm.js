@@ -8,19 +8,17 @@ export default function SearchForm(props) {
     setIsLoading,
     setRegistersSelected,
     setReloadCheckbox,
-    setStarsCount,
   } = props;
   const [queryInput, setQueryInput] = useState("");
 
   const pageNumber = "1";
-  const limitPage = "20";
+  const limitPage = "3";
 
   //obtaining search result
   const { searchResult, isLoading } = useSearch(
     queryInput,
     pageNumber,
-    limitPage,
-    setStarsCount
+    limitPage
   );
 
   //reinicializar el valor de los checkbox cuando se haga una nueva consulta
@@ -34,9 +32,6 @@ export default function SearchForm(props) {
   }, [queryInput]);
 
   //reiniciar valor de numero de estrellas de los repositorios
-  useEffect(() => {
-    setStarsCount(0);
-  }, [queryInput]);
 
   //actualizar loading
   useEffect(() => {

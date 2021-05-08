@@ -42,6 +42,7 @@ export default function ListRegister(props) {
           setRegistersSelected={setRegistersSelected}
           reloadCheckbox={reloadCheckbox}
           setReloadCheckbox={setReloadCheckbox}
+          registersSelected={registersSelected}
         />
       ) : (
         <Loading isVisible={true} />
@@ -56,6 +57,7 @@ function ViewRegisters(props) {
     setRegistersSelected,
     reloadCheckbox,
     setReloadCheckbox,
+    registersSelected,
   } = props;
   return (
     <View>
@@ -67,6 +69,7 @@ function ViewRegisters(props) {
             setRegistersSelected={setRegistersSelected}
             reloadCheckbox={reloadCheckbox}
             setReloadCheckbox={setReloadCheckbox}
+            registersSelected={registersSelected}
           />
         ))}
       </ScrollView>
@@ -80,6 +83,7 @@ function CardRegister(props) {
     setRegistersSelected,
     reloadCheckbox,
     setReloadCheckbox,
+    registersSelected,
   } = props;
   const [isSelected, setIsSelected] = useState(false);
 
@@ -87,15 +91,13 @@ function CardRegister(props) {
     reloadCheckbox && setIsSelected(false);
     setReloadCheckbox(false);
   }, [reloadCheckbox]);
-  const selectedHandler = () => {
-    setIsSelected((prev) => !prev);
+  const selectedHandler = async () => {
+    await setIsSelected((prev) => !prev);
     if (!isSelected) {
       setRegistersSelected((prev) => [...prev, register]);
     } else {
-      setRegistersSelected((prev) => {
-        let index = prev.indexOf(register);
-        return prev.splice(index, 1, register);
-      });
+      const newArray = registersSelected.filter((e) => e !== register);
+      setRegistersSelected(newArray);
     }
   };
 

@@ -13,7 +13,7 @@ export default function Navigation() {
         <Stack.Screen
           name="Home"
           component={GithubSearch}
-          options={{ title: "Welcome" }}
+          options={{ title: "Home" }}
         />
         <Stack.Screen name="RegistersSelected" component={RegistersSelected} />
       </Stack.Navigator>

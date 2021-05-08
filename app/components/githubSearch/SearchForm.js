@@ -3,18 +3,40 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import useSearch from "../../hooks/useSearch";
 
 export default function SearchForm(props) {
-  const { setRegisters, setIsLoading } = props;
+  const {
+    setRegisters,
+    setIsLoading,
+    setRegistersSelected,
+    setReloadCheckbox,
+    setStarsCount,
+  } = props;
   const [queryInput, setQueryInput] = useState("");
 
   const pageNumber = "1";
-  const limitPage = "2";
+  const limitPage = "20";
 
   //obtaining search result
   const { searchResult, isLoading } = useSearch(
     queryInput,
     pageNumber,
-    limitPage
+    limitPage,
+    setStarsCount
   );
+
+  //reinicializar el valor de los checkbox cuando se haga una nueva consulta
+  useEffect(() => {
+    setReloadCheckbox(true);
+  }, [queryInput]);
+
+  //reiniciar valor de registros seleccionados
+  useEffect(() => {
+    setRegistersSelected([]);
+  }, [queryInput]);
+
+  //reiniciar valor de numero de estrellas de los repositorios
+  useEffect(() => {
+    setStarsCount(0);
+  }, [queryInput]);
 
   //actualizar loading
   useEffect(() => {

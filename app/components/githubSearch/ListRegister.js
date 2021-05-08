@@ -1,61 +1,48 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  CheckBox,
+} from "react-native";
 import { Card, Avatar, Image } from "react-native-elements";
 import { StarOutlined } from "@ant-design/icons";
 import Loading from "../Loading";
 
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
+let isRegisterSelected = false;
 
 export default function ListRegister(props) {
-  const users = [
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-    {
-      name: "brynn",
-      avatar:
-        "https://avatars.githubusercontent.com/u/37056048?s=400&u=8bff5282c8cd4fb381a18f95a2afb5937564c91f&v=4",
-    },
-  ];
+  const {
+    registers,
+    isLoading,
+    registersSelected,
+    setRegistersSelected,
+    reloadCheckbox,
+    setReloadCheckbox,
+  } = props;
 
-  const { registers, isLoading, isSearchQuery } = props;
+  useEffect(() => {
+    isRegisterSelected = true;
+  }, [registersSelected]);
 
   useEffect(() => {
     registers.length > 0 &&
       registers.sort((a, b) => new Date(a.date) - new Date(b.date));
   }, [registers]);
 
-  registers && console.log("list...", registers);
   return (
     <View style={styles.view}>
-      <Text>Lista de repositorios...</Text>
-      {/* indicador de cargando los repositorios... */}
-      {/* <Loading isVisible={true} /> */}
       {!isLoading ? (
-        <ViewRegisters registers={registers} />
+        <ViewRegisters
+          registers={registers}
+          setRegistersSelected={setRegistersSelected}
+          reloadCheckbox={reloadCheckbox}
+          setReloadCheckbox={setReloadCheckbox}
+        />
       ) : (
         <Loading isVisible={true} />
       )}
@@ -64,13 +51,23 @@ export default function ListRegister(props) {
 }
 
 function ViewRegisters(props) {
-  const { registers } = props;
+  const {
+    registers,
+    setRegistersSelected,
+    reloadCheckbox,
+    setReloadCheckbox,
+  } = props;
   return (
     <View>
-      <Text>listando registros</Text>
       <ScrollView>
         {registers.map((register, index) => (
-          <CardRegister register={register} key={index} />
+          <CardRegister
+            register={register}
+            key={index}
+            setRegistersSelected={setRegistersSelected}
+            reloadCheckbox={reloadCheckbox}
+            setReloadCheckbox={setReloadCheckbox}
+          />
         ))}
       </ScrollView>
     </View>
@@ -78,7 +75,30 @@ function ViewRegisters(props) {
 }
 
 function CardRegister(props) {
-  const { register } = props;
+  const {
+    register,
+    setRegistersSelected,
+    reloadCheckbox,
+    setReloadCheckbox,
+  } = props;
+  const [isSelected, setIsSelected] = useState(false);
+
+  useEffect(() => {
+    reloadCheckbox && setIsSelected(false);
+    setReloadCheckbox(false);
+  }, [reloadCheckbox]);
+  const selectedHandler = () => {
+    setIsSelected((prev) => !prev);
+    if (!isSelected) {
+      setRegistersSelected((prev) => [...prev, register]);
+    } else {
+      setRegistersSelected((prev) => {
+        let index = prev.indexOf(register);
+        return prev.splice(index, 1, register);
+      });
+    }
+  };
+
   return (
     <View style={styles.register}>
       <View style={styles.cardContent}>
@@ -91,10 +111,17 @@ function CardRegister(props) {
         />
         <View style={styles.details}>
           <Text style={styles.name}>{register.owner}</Text>
-          <Text>{register.repository_name}</Text>
-          <Text>Stars {register.stars}</Text>
+          <Text style={styles.repository_name}>{register.repository_name}</Text>
+          <View>
+            <Text style={styles.stars}>Estrellas: {register.stars}</Text>
+          </View>
         </View>
       </View>
+      <CheckBox
+        value={isSelected}
+        onValueChange={selectedHandler}
+        style={styles.checkbox}
+      />
       {/* <Card style={styles.card}>
       </Card> */}
     </View>
@@ -102,28 +129,44 @@ function CardRegister(props) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    textAlign: "center",
+    fontSize: 30,
+    fontWeight: "bold",
+    marginBottom: 20,
+    color: "#324053",
+  },
+  registersSelected: {
+    marginTop: 20,
+  },
   view: {
-    height: ScreenHeight * 0.5,
+    height: isRegisterSelected ? ScreenHeight * 0.45 : ScreenHeight * 0.5,
     width: ScreenWidth,
-    // borderWidth: 5,
     borderColor: "#efefef",
-    // flexDirection: "row",
+    backgroundColor: "#efefef",
+    marginBottom: 15,
+  },
+  register: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderTopWidth: 2,
+    borderTopColor: "#efefef",
+    backgroundColor: "#fff",
   },
   card: {
     padding: 0,
     display: "flex",
-    // justifyContent: "space-between",
     width: ScreenWidth,
   },
   cardContent: {
+    flexDirection: "row",
+    alignItems: "center",
     paddingLeft: 10,
     paddingTop: 10,
     paddingBottom: 10,
     marginBottom: 2,
     margin: 0,
-    flexDirection: "row",
-    borderTopWidth: 2,
-    borderTopColor: "#efefef",
   },
   user: {
     width: ScreenWidth,
@@ -132,9 +175,24 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
   details: {
-    marginLeft: 20,
+    width: 200,
+    marginLeft: 30,
+    overflow: "hidden",
   },
   name: {
     fontWeight: "bold",
+    marginBottom: 4,
+    color: "#324053",
+  },
+  repository_name: {
+    color: "#858E97",
+    marginBottom: 3,
+  },
+  stars: {
+    color: "#858E97",
+  },
+  checkbox: {
+    justifyContent: "flex-end",
+    marginRight: 20,
   },
 });

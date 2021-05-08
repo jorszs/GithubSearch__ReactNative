@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet } from "react-native";
 import useSearch from "../../hooks/useSearch";
 
 export default function SearchForm(props) {
-  const { setRegisters } = props;
+  const { setRegisters, setIsLoading } = props;
   const [queryInput, setQueryInput] = useState("");
 
   const pageNumber = "1";
@@ -15,8 +15,13 @@ export default function SearchForm(props) {
     pageNumber,
     limitPage
   );
-  //   searchResult && console.log(searchResult);
 
+  //actualizar loading
+  useEffect(() => {
+    setIsLoading(isLoading);
+  }, [isLoading]);
+
+  //actualizar registros
   useEffect(() => {
     setRegisters(searchResult);
   }, [searchResult]);
@@ -35,7 +40,13 @@ export default function SearchForm(props) {
 
 const styles = StyleSheet.create({
   input: {
-    borderWidth: 2,
+    alignSelf: "center",
+    height: 45,
+    width: 250,
+    padding: 10,
+    marginBottom: 15,
+    borderWidth: 3,
     borderColor: "#00a680",
+    backgroundColor: "#efefef",
   },
 });

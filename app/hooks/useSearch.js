@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 export default function useSearch(queryInput, pageNumber, limitPage) {
   //   const { queryInput, pageNumber, limitPage } = props;
-  const [searchResult, setSearchResult] = useState([1, 2, 3]);
+  const [searchResult, setSearchResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -18,12 +18,15 @@ export default function useSearch(queryInput, pageNumber, limitPage) {
       .then((result) => {
         console.log(result);
         // console.log(result.searchResult.items);
+        //  .sort((a,b) => new Date(a.pushed_at) - new Date(b.pused_at))
         setSearchResult(
           result.items.map((register) => ({
             github_url: register.clone_url,
             avatar: register.owner.avatar_url,
             owner: register.owner.login,
             repository_name: register.full_name,
+            stars: register.stargazers_count,
+            date: register.pushed_at,
           }))
         );
       })

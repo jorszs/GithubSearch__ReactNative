@@ -6,17 +6,17 @@ export default function Loading(props) {
   const { isVisible, text } = props;
 
   return (
-    <Overlay
-      isVisible={isVisible}
-      windowBackgroundColor="rgba(0,0,0,0.5)"
-      overlayBackgroundColor="transparent"
-      overlayStyle={styles.overlay}
-    >
-      <View style={styles.view}>
-        <ActivityIndicator size="large" color="#00a680" />
-        {text && <Text style={styles.text}>{text}</Text>}
-      </View>
-    </Overlay>
+    // <Overlay
+    //   isVisible={isVisible}
+    //   windowBackgroundColor="rgba(0,0,0,0.5)"
+    //   overlayBackgroundColor="transparent"
+    //   overlayStyle={styles.overlay}
+    // >
+    // </Overlay>
+    <View style={styles.view}>
+      <ActivityIndicator size="large" color="#00a680" />
+      {text && <Text style={styles.text}>{text}</Text>}
+    </View>
   );
 }
 
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   },
 
   view: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },

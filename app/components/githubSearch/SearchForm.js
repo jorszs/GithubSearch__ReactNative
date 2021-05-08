@@ -36,8 +36,12 @@ export default function SearchForm(props) {
 
   //actualizar loading
   useEffect(() => {
-    setIsLoading(isLoading);
-  }, [isLoading]);
+    if (queryInput) {
+      setIsLoading(true);
+    } else {
+      setIsLoading(false);
+    }
+  }, [queryInput]);
 
   //actualizar registros
   useEffect(() => {

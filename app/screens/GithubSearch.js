@@ -12,8 +12,8 @@ export default function GithubSearch(props) {
   const [starsCount, setStarsCount] = useState(0);
 
   useEffect(() => {
-    console.log("cargando? ", isLoading);
-  }, [isLoading]);
+    setIsLoading(false);
+  }, [registers]);
   //Contar estrellas de registros seleccionados
   useEffect(() => {
     console.log(registersSelected);

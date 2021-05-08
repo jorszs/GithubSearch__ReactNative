@@ -15,10 +15,11 @@ export default function SearchForm(props) {
   const limitPage = "3";
 
   //obtaining search result
-  const { searchResult, isLoading } = useSearch(
+  const { searchResult } = useSearch(
     queryInput,
     pageNumber,
-    limitPage
+    limitPage,
+    setIsLoading
   );
 
   //reinicializar el valor de los checkbox cuando se haga una nueva consulta

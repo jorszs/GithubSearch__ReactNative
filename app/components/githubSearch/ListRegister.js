@@ -10,6 +10,7 @@ import {
 import { Card, Avatar, Image } from "react-native-elements";
 import { StarOutlined } from "@ant-design/icons";
 import Loading from "../Loading";
+import * as Animatable from "react-native-animatable";
 
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
@@ -102,31 +103,33 @@ function CardRegister(props) {
   };
 
   return (
-    <View style={styles.register}>
-      <View style={styles.cardContent}>
-        <Avatar
-          size="medium"
-          rounded
-          source={{
-            uri: register.avatar,
-          }}
-        />
-        <View style={styles.details}>
-          <Text style={styles.name}>{register.owner}</Text>
-          <Text style={styles.repository_name}>{register.repository_name}</Text>
-          <View>
-            <Text style={styles.stars}>Estrellas: {register.stars}</Text>
+    <Animatable.View animation="fadeInUp">
+      <View style={styles.register}>
+        <View style={styles.cardContent}>
+          <Avatar
+            size="medium"
+            rounded
+            source={{
+              uri: register.avatar,
+            }}
+          />
+          <View style={styles.details}>
+            <Text style={styles.name}>{register.owner}</Text>
+            <Text style={styles.repository_name}>
+              {register.repository_name}
+            </Text>
+            <View>
+              <Text style={styles.stars}>Estrellas: {register.stars}</Text>
+            </View>
           </View>
         </View>
+        <CheckBox
+          value={isSelected}
+          onValueChange={selectedHandler}
+          style={styles.checkbox}
+        />
       </View>
-      <CheckBox
-        value={isSelected}
-        onValueChange={selectedHandler}
-        style={styles.checkbox}
-      />
-      {/* <Card style={styles.card}>
-      </Card> */}
-    </View>
+    </Animatable.View>
   );
 }
 

@@ -11,6 +11,9 @@ export default function GithubSearch(props) {
   const [reloadCheckbox, setReloadCheckbox] = useState(false);
   const [starsCount, setStarsCount] = useState(0);
 
+  useEffect(() => {
+    console.log("cargando? ", isLoading);
+  }, [isLoading]);
   //Contar estrellas de registros seleccionados
   useEffect(() => {
     console.log(registersSelected);

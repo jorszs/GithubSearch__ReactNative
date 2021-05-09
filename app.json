@@ -1,14 +1,14 @@
 {
   "expo": {
-   "name": "Your App Name",
+   "name": "GithubSearch",
    "version": "1.0.0",
-   "slug": "your-app-slug",
+   "slug": "GithubSearch",
    "ios": {
-     "bundleIdentifier": "com.yourcompany.yourappname",
+     "bundleIdentifier": "com.github.jorge",
      "buildNumber": "1.0.0"
    },
    "android": {
-     "package": "com.yourcompany.yourappname",
+     "package": "com.github.jorge",
      "versionCode": 1
    }
   }

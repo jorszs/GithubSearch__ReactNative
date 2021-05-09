@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import { Avatar } from "react-native-elements";
 import SearchForm from "../components/githubSearch/SearchForm";
 import ListRepositories from "../components/githubSearch/ListRegister";
 
@@ -37,6 +38,16 @@ export default function GithubSearch(props) {
 
   return (
     <View style={styles.view}>
+      <View style={styles.avatar}>
+        <Avatar
+          size={registers.length > 0 ? "medium" : "xlarge"}
+          rounded
+          source={{
+            uri:
+              "https://1000marcas.net/wp-content/uploads/2020/02/GitHub-Simbolo.jpg",
+          }}
+        />
+      </View>
       <Text style={styles.text}>Github Search</Text>
 
       <SearchForm
@@ -54,16 +65,16 @@ export default function GithubSearch(props) {
         setReloadCheckbox={setReloadCheckbox}
       />
       {registersSelected.length > 0 && (
-        <>
+        <View style={styles.actions}>
           <Text style={styles.stars}>Estrellas: {starsCount}</Text>
-          <View style={styles.button}>
+          <View style={styles.button1}>
             <Button
               color="#c81d11"
               title="Eliminar"
               onPress={deleteRegisters}
             />
           </View>
-          <View style={styles.button}>
+          <View style={styles.button2}>
             <Button
               title="Ver seleccionados"
               onPress={() =>
@@ -71,7 +82,7 @@ export default function GithubSearch(props) {
               }
             ></Button>
           </View>
-        </>
+        </View>
       )}
     </View>
   );
@@ -80,23 +91,45 @@ export default function GithubSearch(props) {
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    // backgroundColor: "#000",
+  },
+  avatar: {
+    // flex: 1,
+    alignSelf: "center",
+    marginTop: 10,
+    // marginBottom: 20,
   },
   text: {
     alignSelf: "center",
-    marginTop: 40,
-    marginBottom: 20,
-    fontSize: 30,
+    marginTop: 5,
+    marginBottom: 5,
+    fontSize: 22,
     fontWeight: "bold",
   },
   stars: {
+    top: 0,
     textAlign: "center",
-    marginBottom: 8,
+    marginBottom: 5,
   },
-  button: {
+  button1: {
+    height: 38,
+    marginTop: 2,
+    paddingLeft: 5,
+    paddingRight: 5,
+    textTransform: "lowercase",
+    // marginBottom: 10,
+    // marginBottom: 15,
+  },
+  button2: {
     height: 40,
     marginTop: 2,
     paddingLeft: 5,
     paddingRight: 5,
     textTransform: "lowercase",
+    marginBottom: 10,
+    marginBottom: 20,
+  },
+  actions: {
+    paddingBottom: 10,
   },
 });

@@ -12,7 +12,7 @@ export default function SearchForm(props) {
   const [queryInput, setQueryInput] = useState("");
 
   const pageNumber = "1";
-  const limitPage = "3";
+  const limitPage = "10";
 
   //obtaining search result
   const { searchResult } = useSearch(
@@ -66,8 +66,9 @@ const styles = StyleSheet.create({
     height: 45,
     width: 250,
     padding: 10,
-    marginBottom: 15,
+    marginBottom: 10,
     borderWidth: 3,
+    borderRadius: 5,
     borderColor: "#00a680",
     backgroundColor: "#efefef",
   },

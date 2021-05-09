@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   view: {
-    height: ScreenHeight * 0.7,
+    height: ScreenHeight * 0.72,
     width: ScreenWidth,
     borderColor: "#efefef",
     backgroundColor: "#efefef",
